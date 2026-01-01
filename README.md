@@ -26,7 +26,7 @@ When refactoring code by extracting classes or methods from a large file into ne
 If you have the `.vsix` file:
 
 ```bash
-code --install-extension one-sided-refactor-verifier-1.0.0.vsix
+code --install-extension one-sided-refactor-verifier-1.0.2.vsix
 ```
 
 Or in VS Code:
@@ -72,7 +72,7 @@ npm run compile
 npx vsce package
 
 # Install the created package
-code --install-extension one-sided-refactor-verifier-1.0.0.vsix
+code --install-extension one-sided-refactor-verifier-1.0.2.vsix
 ```
 
 ## 🚀 Usage
@@ -254,7 +254,3 @@ Feature requests and pull requests are always welcome!
 3. **Review warnings**: Even if verification passes, check warnings for potential issues
 4. **Manual review**: Use this tool as an aid, not a replacement for code review
 5. **Test coverage**: Always run your test suite after refactoring
-
----
-
-**Happy Refactoring! 🎉**
