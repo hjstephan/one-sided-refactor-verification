@@ -177,13 +177,27 @@ function extractMethods(content: string): MethodSignature[] {
     const patterns = [
         // JavaScript/TypeScript: function name() or name() or name = () =>
         /(?:function\s+|(?:public|private|protected|static|async)\s+)*(\w+)\s*\([^)]*\)\s*(?:{|=>)/,
-        // Java/C#: modifier type name()
-        /(?:public|private|protected|static|final|abstract)\s+\w+\s+(\w+)\s*\([^)]*\)\s*{/,
+        // Java: modifiers returnType methodName(params)
+        /(?:public|private|protected|static|final|abstract|synchronized|native)\s+(?:(?:public|private|protected|static|final|abstract|synchronized|native)\s+)*(?:<[^>]+>\s+)?(?:\w+(?:<[^>]+>)?(?:\[\])*)\s+(\w+)\s*\([^)]*\)\s*(?:throws\s+[\w\s,]+)?\s*{/,
+        // C#: modifier type name()
+        /(?:public|private|protected|internal|static|virtual|override|abstract|sealed|async)\s+(?:(?:public|private|protected|internal|static|virtual|override|abstract|sealed|async)\s+)*\w+\s+(\w+)\s*\([^)]*\)\s*{/,
         // Python: def name():
         /def\s+(\w+)\s*\([^)]*\)\s*:/,
+        // C/C++: type name(params)
+        /(?:static|inline|virtual|explicit)?\s*\w+(?:\s*\*|\s+)(\w+)\s*\([^)]*\)\s*(?:const)?\s*{/,
+        // Go: func name() or func (receiver) name()
+        /func\s+(?:\([^)]+\)\s+)?(\w+)\s*\([^)]*\)\s*(?:[^{]*)?{/,
     ];
 
     lines.forEach((line, index) => {
+        // Skip comments and empty lines
+        const trimmed = line.trim();
+        if (trimmed.startsWith('//') || trimmed.startsWith('/*') || 
+            trimmed.startsWith('*') || trimmed.startsWith('#') || 
+            trimmed.length === 0) {
+            return;
+        }
+
         for (const pattern of patterns) {
             const match = line.match(pattern);
             if (match) {

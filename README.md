@@ -132,12 +132,32 @@ Run the verifier, and it will confirm all extracted methods are accounted for!
 
 ## 🛠️ Supported Languages
 
-The extension uses regex patterns to detect methods in:
-- **JavaScript/TypeScript**: `function name()`, `name()`, arrow functions
-- **Java/C#**: `public/private/protected type name()`
+The extension uses enhanced regex patterns to detect methods in:
+- **JavaScript/TypeScript**: `function name()`, `name()`, arrow functions, class methods
+- **Java**: Full support with modifiers like `public`, `private`, `protected`, `static`, `final`, `abstract`, `synchronized`, generic types, and `throws` clauses
+- **C#**: `public/private/protected/internal`, `static`, `virtual`, `override`, `abstract`, `sealed`, `async`
 - **Python**: `def name():`
-- **C/C++**: Function declarations
-- **Go**: `func name()`
+- **C/C++**: Function declarations with modifiers
+- **Go**: `func name()` and methods with receivers
+
+### Java Support Details
+
+The extension properly handles Java methods with:
+- Access modifiers: `public`, `private`, `protected`
+- Non-access modifiers: `static`, `final`, `abstract`, `synchronized`, `native`
+- Generic return types: `<T>`, `List<String>`, etc.
+- Array return types: `String[]`, `int[][]`
+- Exception declarations: `throws IOException, SQLException`
+- Multiple modifiers: `public static final`
+
+**Example Java methods detected:**
+```java
+public void createUser() { }
+private static String getUserName() { }
+protected final List<User> getUsers() throws SQLException { }
+public abstract <T> T findById(int id);
+synchronized void updateCache() { }
+```
 
 ## ⚙️ Configuration
 
