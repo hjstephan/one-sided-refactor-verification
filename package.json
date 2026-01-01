@@ -2,7 +2,7 @@
   "name": "one-sided-refactor-verifier",
   "displayName": "One-Sided Refactor Verifier",
   "description": "Verify refactorings where code is extracted from one file into new files",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "hjstephan86",
   "repository": {
     "type": "git",
