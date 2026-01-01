@@ -1,0 +1,59 @@
+{
+  "name": "one-sided-refactor-verifier",
+  "displayName": "One-Sided Refactor Verifier",
+  "description": "Verify refactorings where code is extracted from one file into new files",
+  "version": "1.0.0",
+  "publisher": "your-name",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:refactor-verifier.verify"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "refactor-verifier.verify",
+        "title": "Verify One-Sided Refactoring",
+        "category": "Refactor Verifier"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "refactor-verifier.verify",
+        "key": "ctrl+shift+r v",
+        "mac": "cmd+shift+r v"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "refactor-verifier.verify",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.3"
+  }
+}
