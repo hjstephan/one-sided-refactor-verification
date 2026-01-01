@@ -2,7 +2,7 @@
   "name": "one-sided-refactor-verifier",
   "displayName": "One-Sided Refactor Verifier",
   "description": "Verify refactorings where code is extracted from one file into new files",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "publisher": "hjstephan86",
   "repository": {
     "type": "git",
@@ -49,16 +49,24 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "lint": "eslint src",
+    "test": "node ./out/test/run_test.js"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "16.x",
     "@types/vscode": "^1.75.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.5.2",
     "@vscode/vsce": "^2.32.0",
-    "eslint": "^8.28.0",
-    "typescript": "^4.9.3"
+    "eslint": "^8.57.1",
+    "glob": "^13.0.0",
+    "globals": "^16.5.0",
+    "mocha": "^11.7.5",
+    "typescript": "^4.9.3",
+    "typescript-eslint": "^8.51.0"
   }
 }

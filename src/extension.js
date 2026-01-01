@@ -1,18 +1,18 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+        desc = { enumerable: true, get: function () { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
+}) : (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
     Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
+}) : function (o, v) {
     o["default"] = v;
 });
 var __importStar = (this && this.__importStar) || function (mod) {
@@ -31,7 +31,7 @@ const path = __importStar(require("path"));
 function activate(context) {
     console.log('One-Sided Refactor Verifier is now active');
     // Command to start verification
-    let disposable = vscode.commands.registerCommand('refactor-verifier.verify', async () => {
+    const disposable = vscode.commands.registerCommand('refactor-verifier.verify', async () => {
         await verifyRefactoring();
     });
     context.subscriptions.push(disposable);
@@ -98,7 +98,7 @@ function analyzeRefactoring(originalContent, refactoredContent, newFiles) {
     // Check if removed methods exist in new files
     for (const removed of removedMethods) {
         let found = false;
-        for (const [fileName, methods] of newFileMethods) {
+        for (const [_fileName, methods] of newFileMethods) {
             if (methods.some(m => m.name === removed.name)) {
                 found = true;
                 break;

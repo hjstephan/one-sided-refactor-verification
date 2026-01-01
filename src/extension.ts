@@ -1,7 +1,7 @@
 // extension.ts
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
 interface MethodSignature {
     name: string;
@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('One-Sided Refactor Verifier is now active');
 
     // Command to start verification
-    let disposable = vscode.commands.registerCommand(
+    const disposable = vscode.commands.registerCommand(
         'refactor-verifier.verify',
         async () => {
             await verifyRefactoring();
@@ -39,7 +39,7 @@ async function verifyRefactoring() {
     }
 
     const currentFile = editor.document.uri.fsPath;
-    
+
     // Ask user to select the original file version
     const originalFileUri = await vscode.window.showOpenDialog({
         canSelectMany: false,
@@ -107,7 +107,7 @@ function analyzeRefactoring(
 ): RefactoringAnalysis {
     const originalMethods = extractMethods(originalContent);
     const refactoredMethods = extractMethods(refactoredContent);
-    
+
     const newFileMethods = new Map<string, MethodSignature[]>();
     for (const file of newFiles) {
         newFileMethods.set(
@@ -126,7 +126,7 @@ function analyzeRefactoring(
     // Check if removed methods exist in new files
     for (const removed of removedMethods) {
         let found = false;
-        for (const [fileName, methods] of newFileMethods) {
+        for (const [_fileName, methods] of newFileMethods) {
             if (methods.some(m => m.name === removed.name)) {
                 found = true;
                 break;
@@ -142,7 +142,7 @@ function analyzeRefactoring(
     // Check for size reduction
     const originalLines = originalContent.split('\n').length;
     const refactoredLines = refactoredContent.split('\n').length;
-    
+
     if (refactoredLines >= originalLines) {
         warnings.push(
             `Refactored file (${refactoredLines} lines) is not smaller than original (${originalLines} lines)`
@@ -172,7 +172,7 @@ function analyzeRefactoring(
 function extractMethods(content: string): MethodSignature[] {
     const methods: MethodSignature[] = [];
     const lines = content.split('\n');
-    
+
     // Regex patterns for different languages
     const patterns = [
         // JavaScript/TypeScript: function name() or name() or name = () =>
@@ -192,8 +192,8 @@ function extractMethods(content: string): MethodSignature[] {
     lines.forEach((line, index) => {
         // Skip comments and empty lines
         const trimmed = line.trim();
-        if (trimmed.startsWith('//') || trimmed.startsWith('/*') || 
-            trimmed.startsWith('*') || trimmed.startsWith('#') || 
+        if (trimmed.startsWith('//') || trimmed.startsWith('/*') ||
+            trimmed.startsWith('*') || trimmed.startsWith('#') ||
             trimmed.length === 0) {
             return;
         }
@@ -350,4 +350,4 @@ function generateResultsHTML(analysis: RefactoringAnalysis): string {
     `;
 }
 
-export function deactivate() {}
+export function deactivate() { }
