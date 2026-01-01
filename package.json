@@ -3,7 +3,11 @@
   "displayName": "One-Sided Refactor Verifier",
   "description": "Verify refactorings where code is extracted from one file into new files",
   "version": "1.0.0",
-  "publisher": "your-name",
+  "publisher": "hjstephan86",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hjstephan/one-sided-refactor-verifier"
+  },
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -49,10 +53,11 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.75.0",
     "@types/node": "16.x",
+    "@types/vscode": "^1.75.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/vsce": "^2.32.0",
     "eslint": "^8.28.0",
     "typescript": "^4.9.3"
   }

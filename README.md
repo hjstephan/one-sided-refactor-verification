@@ -21,19 +21,57 @@ When refactoring code by extracting classes or methods from a large file into ne
 
 ## 📦 Installation
 
-### From Source
+### From VSIX File
 
-1. Clone or download this repository
-2. Open the folder in VS Code
-3. Run `npm install` to install dependencies
-4. Run `npm run compile` to compile TypeScript
-5. Press `F5` to open a new VS Code window with the extension loaded
-
-### Package & Install
+If you have the `.vsix` file:
 
 ```bash
-npm install -g vsce
-vsce package
+code --install-extension one-sided-refactor-verifier-1.0.0.vsix
+```
+
+Or in VS Code:
+1. Open Extensions view (`Ctrl+Shift+X`)
+2. Click the `...` menu at the top
+3. Select "Install from VSIX..."
+4. Choose the `.vsix` file
+
+### From Source
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hjstephan/one-sided-refactor-verifier.git
+   cd one-sided-refactor-verifier
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Compile TypeScript:
+   ```bash
+   npm run compile
+   ```
+
+4. Test in development mode:
+   - Open the folder in VS Code
+   - Press `F5` to open a new VS Code window with the extension loaded
+
+### Build VSIX Package
+
+To create your own `.vsix` package:
+
+```bash
+# Install dependencies (includes vsce)
+npm install
+
+# Compile the extension
+npm run compile
+
+# Create the VSIX package
+npx vsce package
+
+# Install the created package
 code --install-extension one-sided-refactor-verifier-1.0.0.vsix
 ```
 
@@ -171,12 +209,21 @@ Future versions may include:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Areas for improvement:
+Contributions are welcome! Here's how to contribute:
+
+1. Fork the repository: https://github.com/hjstephan/one-sided-refactor-verifier
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and commit: `git commit -m 'Add amazing feature'`
+4. Push to your branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+### Areas for Improvement
 - Better language-specific parsing (using AST parsers)
 - Git integration for automatic before/after detection
 - Test coverage mapping
 - Call graph analysis
 - Refactoring suggestion features
+- Support for more programming languages
 
 ## 📝 Known Limitations
 
@@ -187,11 +234,30 @@ Contributions are welcome! Areas for improvement:
 
 ## 📄 License
 
-MIT License - feel free to use and modify as needed.
+MIT License
+
+Copyright (c) 2026 hjstephan86
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## 🐛 Issues & Feedback
 
-If you encounter issues or have suggestions, please report them through your issue tracker or feedback mechanism.
+Found a bug or have a suggestion? Please report it on GitHub:
+
+**GitHub Issues**: https://github.com/hjstephan/one-sided-refactor-verifier/issues
+
+When reporting issues, please include:
+- VS Code version
+- Extension version
+- Programming language being analyzed
+- Sample code that reproduces the issue (if applicable)
+- Expected vs actual behavior
+
+Feature requests and pull requests are always welcome!
 
 ## 🎓 Tips for Best Results
 
