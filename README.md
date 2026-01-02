@@ -26,7 +26,7 @@ When refactoring code by extracting classes or methods from a large file into ne
 If you have the `.vsix` file:
 
 ```bash
-code --install-extension one-sided-refactor-verifier-1.1.0.vsix
+code --install-extension one-sided-refactor-verifier-1.1.1.vsix
 ```
 
 Or in VS Code:
@@ -39,7 +39,7 @@ Or in VS Code:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/hjstephan/one-sided-refactor-verifier.git
+   git clone https://github.com/hjstephan/one-sided-refactor-verification.git
    cd one-sided-refactor-verifier
    ```
 
@@ -77,7 +77,7 @@ npm run compile
 npx vsce package
 
 # Install the created package
-code --install-extension one-sided-refactor-verifier-1.1.0.vsix
+code --install-extension one-sided-refactor-verifier-1.1.1.vsix
 ```
 
 ## 🚀 Usage
@@ -216,7 +216,7 @@ Future versions may include:
 
 Contributions are welcome! Here's how to contribute:
 
-1. Fork the repository: https://github.com/hjstephan/one-sided-refactor-verifier
+1. Fork the repository: https://github.com/hjstephan/one-sided-refactor-verification
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Make your changes and commit: `git commit -m 'Add amazing feature'`
 4. Push to your branch: `git push origin feature/amazing-feature`
@@ -241,7 +241,7 @@ Contributions are welcome! Here's how to contribute:
 
 Found a bug or have a suggestion? Please report it on GitHub:
 
-**GitHub Issues**: https://github.com/hjstephan/one-sided-refactor-verifier/issues
+**GitHub Issues**: https://github.com/hjstephan/one-sided-refactor-verification/issues
 
 When reporting issues, please include:
 - VS Code version

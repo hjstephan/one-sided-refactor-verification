@@ -2,11 +2,11 @@
   "name": "one-sided-refactor-verifier",
   "displayName": "One-Sided Refactor Verifier",
   "description": "Verify refactorings where code is extracted from one file into new files",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "hjstephan86",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hjstephan/one-sided-refactor-verifier"
+    "url": "https://github.com/hjstephan/one-sided-refactor-verification"
   },
   "engines": {
     "vscode": "^1.75.0"

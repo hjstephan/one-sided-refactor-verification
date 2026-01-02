@@ -1,0 +1,49 @@
+
+> one-sided-refactor-verifier@1.1.1 pretest
+> npm run compile && npm run lint
+
+
+> one-sided-refactor-verifier@1.1.1 compile
+> tsc -p ./
+
+
+> one-sided-refactor-verifier@1.1.1 lint
+> eslint src
+
+
+> one-sided-refactor-verifier@1.1.1 test
+> node ./out/test/run_test.js
+
+[90m[main 2026-01-02T00:36:41.553Z][0m update#setState disabled
+[90m[main 2026-01-02T00:36:41.555Z][0m update#ctor - updates are disabled by the environment
+ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+Started local extension host with pid 5958.
+Loading development extension at /home/stephan/Git/one-sided-refactor-verification
+MCP Registry configured: https://api.mcp.github.com
+Settings Sync: Account status changed from uninitialized to unavailable
+[0m[0m
+[0m  Extension Test Suite[0m
+  [32m  ✔[0m[90m Extension should be present[0m
+One-Sided Refactor Verifier is now active
+  [32m  ✔[0m[90m Extension should activate[0m
+  [32m  ✔[0m[90m Should register verify command[0m
+  [32m  ✔[0m[90m Method extraction - JavaScript functions[0m
+  [32m  ✔[0m[90m Method extraction - TypeScript class methods[0m
+  [32m  ✔[0m[90m Method extraction - Java methods with modifiers[0m
+  [32m  ✔[0m[90m Method extraction - Python methods[0m
+  [32m  ✔[0m[90m Method extraction - C# methods[0m
+  [32m  ✔[0m[90m Method extraction - Go functions[0m
+  [32m  ✔[0m[90m Should skip comments and empty lines[0m
+  [32m  ✔[0m[90m Analysis - Successful refactoring[0m
+  [32m  ✔[0m[90m Analysis - Missing method error[0m
+  [32m  ✔[0m[90m Analysis - File size warning[0m
+  [32m  ✔[0m[90m Analysis - Duplicate method warning[0m
+  [32m  ✔[0m[90m Analysis - Complex Java refactoring[0m
+  [32m  ✔[0m[90m HTML report generation[0m
+  [32m  ✔[0m[90m HTML report with errors[0m
+  [32m  ✔[0m[90m Edge case - Empty files[0m
+  [32m  ✔[0m[90m Edge case - Only comments[0m
+  [32m  ✔[0m[90m Line numbers are correct[0m
+[92m [0m[32m 20 passing[0m[90m (50ms)[0m
+[90m[main 2026-01-02T00:36:43.921Z][0m Extension host with pid 5958 exited with code: 0, signal: unknown.
+Exit code:   0
