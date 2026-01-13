@@ -25,3 +25,14 @@
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Coverage - Ignore temporary files but keep HTML reports
+coverage/tmp/
+coverage/*.json
+coverage/lcov.info
+
+# Keep the HTML coverage reports
+!coverage/**/*.html
+!coverage/**/*.css
+!coverage/**/*.js
+!coverage/**/*.png

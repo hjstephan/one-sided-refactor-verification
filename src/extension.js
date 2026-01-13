@@ -1,49 +1,34 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function () { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function (o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deactivate = exports.activate = void 0;
-// extension.ts
-const vscode = __importStar(require("vscode"));
-const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
+// extension.js
+const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * @param {vscode.ExtensionContext} context
+ */
 function activate(context) {
     console.log('One-Sided Refactor Verifier is now active');
+
     // Command to start verification
-    const disposable = vscode.commands.registerCommand('refactor-verifier.verify', async () => {
-        await verifyRefactoring();
-    });
+    const disposable = vscode.commands.registerCommand(
+        'refactor-verifier.verify',
+        async () => {
+            await verifyRefactoring();
+        }
+    );
+
     context.subscriptions.push(disposable);
 }
-exports.activate = activate;
+
 async function verifyRefactoring() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
         vscode.window.showErrorMessage('No active editor found');
         return;
     }
+
     const currentFile = editor.document.uri.fsPath;
+
     // Ask user to select the original file version
     const originalFileUri = await vscode.window.showOpenDialog({
         canSelectMany: false,
@@ -52,9 +37,11 @@ async function verifyRefactoring() {
             'Source files': ['ts', 'js', 'java', 'py', 'cs', 'cpp', 'c', 'go']
         }
     });
+
     if (!originalFileUri || originalFileUri.length === 0) {
         return;
     }
+
     // Ask user to select new files created during refactoring
     const newFilesUri = await vscode.window.showOpenDialog({
         canSelectMany: true,
@@ -63,13 +50,20 @@ async function verifyRefactoring() {
             'Source files': ['ts', 'js', 'java', 'py', 'cs', 'cpp', 'c', 'go']
         }
     });
+
     if (!newFilesUri || newFilesUri.length === 0) {
         vscode.window.showWarningMessage('No new files selected for verification');
         return;
     }
+
     // Perform analysis
-    await performAnalysis(originalFileUri[0].fsPath, currentFile, newFilesUri.map(uri => uri.fsPath));
+    await performAnalysis(
+        originalFileUri[0].fsPath,
+        currentFile,
+        newFilesUri.map(uri => uri.fsPath)
+    );
 }
+
 async function performAnalysis(originalPath, refactoredPath, newFilePaths) {
     try {
         const originalContent = fs.readFileSync(originalPath, 'utf8');
@@ -78,23 +72,38 @@ async function performAnalysis(originalPath, refactoredPath, newFilePaths) {
             path: p,
             content: fs.readFileSync(p, 'utf8')
         }));
-        const analysis = analyzeRefactoring(originalContent, refactoredContent, newFilesContent);
+
+        const analysis = analyzeRefactoring(
+            originalContent,
+            refactoredContent,
+            newFilesContent
+        );
+
         displayResults(analysis);
-    }
-    catch (error) {
+    } catch (error) {
         vscode.window.showErrorMessage(`Analysis failed: ${error}`);
     }
 }
+
 function analyzeRefactoring(originalContent, refactoredContent, newFiles) {
     const originalMethods = extractMethods(originalContent);
     const refactoredMethods = extractMethods(refactoredContent);
+
     const newFileMethods = new Map();
     for (const file of newFiles) {
-        newFileMethods.set(path.basename(file.path), extractMethods(file.content));
+        newFileMethods.set(
+            path.basename(file.path),
+            extractMethods(file.content)
+        );
     }
-    const removedMethods = originalMethods.filter(om => !refactoredMethods.some(rm => rm.name === om.name));
+
+    const removedMethods = originalMethods.filter(
+        om => !refactoredMethods.some(rm => rm.name === om.name)
+    );
+
     const warnings = [];
     const errors = [];
+
     // Check if removed methods exist in new files
     for (const removed of removedMethods) {
         let found = false;
@@ -105,23 +114,33 @@ function analyzeRefactoring(originalContent, refactoredContent, newFiles) {
             }
         }
         if (!found) {
-            errors.push(`Method '${removed.name}' was removed but not found in any new file`);
+            errors.push(
+                `Method '${removed.name}' was removed but not found in any new file`
+            );
         }
     }
+
     // Check for size reduction
     const originalLines = originalContent.split('\n').length;
     const refactoredLines = refactoredContent.split('\n').length;
+
     if (refactoredLines >= originalLines) {
-        warnings.push(`Refactored file (${refactoredLines} lines) is not smaller than original (${originalLines} lines)`);
+        warnings.push(
+            `Refactored file (${refactoredLines} lines) is not smaller than original (${originalLines} lines)`
+        );
     }
+
     // Check for potential duplicates
     for (const [fileName, methods] of newFileMethods) {
         for (const method of methods) {
             if (refactoredMethods.some(m => m.name === method.name)) {
-                warnings.push(`Method '${method.name}' exists in both refactored file and ${fileName}`);
+                warnings.push(
+                    `Method '${method.name}' exists in both refactored file and ${fileName}`
+                );
             }
         }
     }
+
     return {
         removedMethods,
         remainingMethods: refactoredMethods,
@@ -130,13 +149,17 @@ function analyzeRefactoring(originalContent, refactoredContent, newFiles) {
         errors
     };
 }
+
 function extractMethods(content) {
     const methods = [];
     const lines = content.split('\n');
+
     // Regex patterns for different languages
     const patterns = [
         // JavaScript/TypeScript: function name() or name() or name = () =>
         /(?:function\s+|(?:public|private|protected|static|async)\s+)*(\w+)\s*\([^)]*\)\s*(?:{|=>)/,
+        // Arrow functions: const/let/var name = () =>
+        /(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\([^)]*\)\s*=>/,
         // Java: modifiers returnType methodName(params)
         /(?:public|private|protected|static|final|abstract|synchronized|native)\s+(?:(?:public|private|protected|static|final|abstract|synchronized|native)\s+)*(?:<[^>]+>\s+)?(?:\w+(?:<[^>]+>)?(?:\[\])*)\s+(\w+)\s*\([^)]*\)\s*(?:throws\s+[\w\s,]+)?\s*{/,
         // C#: modifier type name()
@@ -148,6 +171,7 @@ function extractMethods(content) {
         // Go: func name() or func (receiver) name()
         /func\s+(?:\([^)]+\)\s+)?(\w+)\s*\([^)]*\)\s*(?:[^{]*)?{/,
     ];
+
     lines.forEach((line, index) => {
         // Skip comments and empty lines
         const trimmed = line.trim();
@@ -156,6 +180,7 @@ function extractMethods(content) {
             trimmed.length === 0) {
             return;
         }
+
         for (const pattern of patterns) {
             const match = line.match(pattern);
             if (match) {
@@ -168,16 +193,26 @@ function extractMethods(content) {
             }
         }
     });
+
     return methods;
 }
+
 function displayResults(analysis) {
-    const panel = vscode.window.createWebviewPanel('refactoringResults', 'Refactoring Verification Results', vscode.ViewColumn.Two, {});
+    const panel = vscode.window.createWebviewPanel(
+        'refactoringResults',
+        'Refactoring Verification Results',
+        vscode.ViewColumn.Two,
+        {}
+    );
+
     panel.webview.html = generateResultsHTML(analysis);
 }
+
 function generateResultsHTML(analysis) {
     const hasErrors = analysis.errors.length > 0;
     const statusColor = hasErrors ? '#ff6b6b' : '#51cf66';
     const statusText = hasErrors ? 'FAILED' : 'PASSED';
+
     let newFilesHTML = '';
     for (const [fileName, methods] of analysis.newFileMethods) {
         newFilesHTML += `
@@ -189,6 +224,7 @@ function generateResultsHTML(analysis) {
             </div>
         `;
     }
+
     return `
         <!DOCTYPE html>
         <html>
@@ -296,6 +332,10 @@ function generateResultsHTML(analysis) {
         </html>
     `;
 }
-function deactivate() { }
-exports.deactivate = deactivate;
-//# sourceMappingURL=extension.js.map
+
+function deactivate() {}
+
+module.exports = {
+    activate,
+    deactivate
+};

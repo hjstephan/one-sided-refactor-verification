@@ -26,7 +26,7 @@ When refactoring code by extracting classes or methods from a large file into ne
 If you have the `.vsix` file:
 
 ```bash
-code --install-extension one-sided-refactor-verifier-1.1.1.vsix
+code --install-extension one-sided-refactor-verifier-2.0.0.vsix
 ```
 
 Or in VS Code:
@@ -77,7 +77,7 @@ npm run compile
 npx vsce package
 
 # Install the created package
-code --install-extension one-sided-refactor-verifier-1.1.1.vsix
+code --install-extension one-sided-refactor-verifier-2.0.0.vsix
 ```
 
 ## 🚀 Usage
